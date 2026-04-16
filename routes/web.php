@@ -7,4 +7,6 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 });
 
-
+Route::get('/menu', function () {
+    return Inertia::render('MenuPage');
+});

@@ -17,6 +17,8 @@ export interface Product {
   popular?: boolean;
 }
 
+export const categories = ["All", "Pancit", "Spaghetti", "Bilao Specials", "Party Packages"];
+
 export const products: Product[] = [
   {
     id: "1",
@@ -134,3 +136,5 @@ export const products: Product[] = [
     ],
   },
 ];
+
+

@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import { ShoppingCart, Star } from "lucide-react";
-import type { Product } from "../../data/products";
-import Button from "../ui/button";
+import type { Product } from "../data/products";
+import Button from "./ui/button";
 
 type ProductCardProps = {
     product: Product;
