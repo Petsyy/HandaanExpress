@@ -10,3 +10,9 @@ Route::get('/', function () {
 Route::get('/menu', function () {
     return Inertia::render('MenuPage');
 });
+
+Route::get('/product/{id}', function ($id) {
+    return Inertia::render('ProductDetailsPage', [
+        'productId' => $id,
+    ]);
+}) -> name('product.show');
