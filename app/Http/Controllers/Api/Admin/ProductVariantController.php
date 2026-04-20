@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\StoreVariantRequest;
-use App\Services\ProductVariantService;
+use App\Http\Requests\Admin\StoreVariantRequest;
+use App\Services\Admin\ProductVariantService;
 
 class ProductVariantController extends Controller
 {
@@ -17,7 +17,7 @@ class ProductVariantController extends Controller
 
     public function index()
     {
-       $variants = $this->productVariantService->getAll();
+       $variants = $this->productVariantService->getAvailableProducts();
 
         return response()->json($variants);
     }

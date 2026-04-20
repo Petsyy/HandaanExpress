@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 use Illuminate\Support\Str;
 use App\Models\Category;
 
 class CategoryService
 {
-    public function getAll()
+    public function getAvailableProducts()
     {
         return Category::all();
     }
@@ -15,8 +15,8 @@ class CategoryService
     {
         return Category::create([
             'name' => $data['name'],
-            'slug' => str::slug($data['name']),
-            'is_active' => $data['is_active']
+            'slug' => Str::slug($data['name']),
+            'is_active' => $data['is_active'] ?? true,
         ]);
     }
 

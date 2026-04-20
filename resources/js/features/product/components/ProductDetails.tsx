@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
 import { Check, Link, Minus, Plus, Star } from "lucide-react";
 import { products } from "@/data/products";
-import { usePage } from "@inertiajs/react";
+import { usePage, router } from "@inertiajs/react";
+import { useCartStore } from "@/store/useCartStore";
 
 type PageProps = {
     productId: string;
 };
 
 export default function ProductDetails() {
-   const { productId } = usePage<PageProps>().props;
+    const { productId } = usePage<PageProps>().props;
+    const addItem = useCartStore((state) => state.addItem);
 
     const product = products.find(
         (item) => String(item.id) === String(productId),
@@ -24,9 +26,7 @@ export default function ProductDetails() {
     const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
     const [quantity, setQuantity] = useState(1);
 
-    const activeSize =
-        product.sizes.find((size) => size.label === selectedSize) ??
-        defaultSize;
+    const activeSize = product.sizes.find((size) => size.label === selectedSize) ?? defaultSize;
 
     const toggleAddOn = (label: string) => {
         setSelectedAddOns((current) =>
@@ -52,17 +52,35 @@ export default function ProductDetails() {
     const formatPeso = (value: number) => `₱${value.toLocaleString()}`;
 
     const increaseQuantity = () => setQuantity((current) => current + 1);
-    const decreaseQuantity = () =>
-        setQuantity((current) => (current > 1 ? current - 1 : 1));
+    const decreaseQuantity = () => setQuantity((current) => (current > 1 ? current - 1 : 1));
+
+    const handleAddToCart = () => {
+        if (!product) return;
+
+        addItem({
+            productId: String(product.id),
+            name: product.name,
+            image: product.image,
+            size: selectedSize,
+            price: activeSize.price,
+            quantity: quantity,
+            addOns: product.addOns
+                ?.filter((addOn) => selectedAddOns.includes(addOn.label))
+                .map((addOn) => ({ label: addOn.label, price: addOn.price })) ?? [],
+        });
+
+        router.visit("/cart");
+    };
 
     return (
         <section className="px-6 py-10 sm:px-10 md:px-14 lg:px-24">
             <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_1fr]">
                 <div className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-gray-200">
                     {/* back button */}
-                    <Link href="/" className="absolute left-4 top-4 rounded-full bg-white p-2 text-gray-700 shadow hover:bg-gray-100">
-                
-                    </Link>
+                    <Link
+                        href="/"
+                        className="absolute left-4 top-4 rounded-full bg-white p-2 text-gray-700 shadow hover:bg-gray-100"
+                    ></Link>
                     <div className="aspect-square">
                         <img
                             src={product.image}
@@ -73,6 +91,14 @@ export default function ProductDetails() {
                 </div>
 
                 <div className="flex flex-col">
+                    {/* Back button */}
+                    <button
+                        onClick={() => window.history.back()}
+                        className="mb-4 flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                    >
+                        ← Back
+                    </button>
+
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                         {product.name}
                     </h1>
@@ -107,11 +133,10 @@ export default function ProductDetails() {
                                         onClick={() =>
                                             setSelectedSize(size.label)
                                         }
-                                        className={`rounded-full border px-5 py-3 text-sm font-medium transition ${
-                                            isSelected
-                                                ? "border-green-500 bg-green-50 text-green-700"
-                                                : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
-                                        }`}
+                                        className={`rounded-full border px-5 py-3 text-sm font-medium transition ${isSelected
+                                            ? "border-green-500 bg-green-50 text-green-700"
+                                            : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
+                                            }`}
                                     >
                                         {size.label} — {formatPeso(size.price)}
                                     </button>
@@ -135,11 +160,10 @@ export default function ProductDetails() {
                                 return (
                                     <label
                                         key={addOn.label}
-                                        className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-4 transition ${
-                                            isSelected
-                                                ? "border-gray-300 bg-white"
-                                                : "border-gray-300 bg-white hover:border-gray-400"
-                                        }`}
+                                        className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-4 transition ${isSelected
+                                            ? "border-gray-300 bg-white"
+                                            : "border-gray-300 bg-white hover:border-gray-400"
+                                            }`}
                                     >
                                         <input
                                             type="checkbox"
@@ -152,11 +176,10 @@ export default function ProductDetails() {
 
                                         <div className="flex items-center gap-3">
                                             <div
-                                                className={`flex h-5 w-5 items-center justify-center rounded-full border ${
-                                                    isSelected
-                                                        ? "border-green-500 bg-green-500"
-                                                        : "border-green-500 bg-white"
-                                                }`}
+                                                className={`flex h-5 w-5 items-center justify-center rounded-full border ${isSelected
+                                                    ? "border-green-500 bg-green-500"
+                                                    : "border-green-500 bg-white"
+                                                    }`}
                                             >
                                                 {isSelected && (
                                                     <Check className="h-3 w-3 text-white" />
@@ -210,6 +233,7 @@ export default function ProductDetails() {
                     <div className="mt-8">
                         <button
                             type="button"
+                            onClick={handleAddToCart}
                             className="inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition hover:bg-orange-600"
                         >
                             Add to Cart — {formatPeso(totalPrice)}

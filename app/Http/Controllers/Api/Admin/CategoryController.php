@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Services\CategoryService;
+use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Services\Admin\CategoryService;
 
 class CategoryController extends Controller
 {
@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoryService->getAll();
+        $categories = $this->categoryService->getAvailableProducts();
 
         return response()->json($categories);
     }

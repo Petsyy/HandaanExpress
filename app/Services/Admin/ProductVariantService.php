@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Models\ProductVariant;
 
 class ProductVariantService
 {
-    public function getAll()
+    public function getAvailableProducts()
     {
         return ProductVariant::with('product')->get();
     }
 
     public function createVariant(array $data): ProductVariant
     {
-        if(!empty($data['is_default']) && $data['is_default']) {
+        if (!empty($data['is_default']) && $data['is_default']) {
             ProductVariant::where('product_id', $data['product_id'])
                 ->update(['is_default' => false]);
         }
@@ -27,7 +27,7 @@ class ProductVariantService
             'is_available' => $data['is_available'] ?? true,
         ]);
     }
-    
+
     public function getById(int $id): ProductVariant
     {
         return ProductVariant::with('product')->findOrFail($id);

@@ -18,6 +18,12 @@ class Product extends Model
         'is_available',
         'sort_order',
     ];
+    protected $casts = [
+        'is_featured' => 'boolean',
+        'is_available' => 'boolean',
+        'base_price' => 'decimal:2',
+        'sort_order' => 'integer',
+    ];
 
     public function category(): BelongsTo
     {

@@ -1,9 +1,16 @@
 <?php
 
-use App\Http\Controllers\Api\Controller;
-use App\Http\Controllers\Api\Admin\CategoryController;
-use App\Http\Controllers\Api\Admin\ProductController;
-use App\Http\Controllers\Api\Admin\ProductVariantController;
+use App\Http\Controllers\Api\Admin\{
+    CategoryController as AdminCategoryController,
+    ProductController as AdminProductController,
+    ProductVariantController as AdminProductVariantController,
+    OrderController as AdminOrderController
+};
+use App\Http\Controllers\Api\Customer\{
+    OrderController as CustomerOrderController,
+    CartController,
+    CheckoutController
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,14 +18,25 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::post('/categories', [CategoryController::class, 'store']);
-Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::get('/categories', [AdminCategoryController::class, 'index']);
+Route::get('/products', [AdminProductController::class, 'index']);
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::post('/products', [ProductController::class, 'store']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::prefix('admin')->group(function () {
+    Route::apiResource('categories', AdminCategoryController::class);
+    Route::apiResource('products', AdminProductController::class);
+    Route::apiResource('product-variants', AdminProductVariantController::class);
+    Route::apiResource('orders', AdminOrderController::class);
+    Route::patch('orders/{id}/status', [AdminOrderController::class, 'updateStatus']);
+});
 
-Route::get('/product-variants', [ProductVariantController::class, 'index']);
-Route::post('/product-variants', [ProductVariantController::class, 'store']);
-Route::get('/product-variants/{id}', [ProductVariantController::class, 'show']);
+Route::prefix('customer')->group(function () {
+    Route::get('orders', [CustomerOrderController::class, 'index']);
+    Route::get('orders/{id}', [CustomerOrderController::class, 'show']);
+
+    Route::get('cart', [CartController::class, 'show']);
+    Route::post('cart/items', [CartController::class, 'store']);
+    Route::patch('cart/items/{id}', [CartController::class, 'update']);
+    Route::delete('cart/items/{id}', [CartController::class, 'destroy']);
+
+    Route::post('checkout', [CheckoutController::class, 'store']);
+});

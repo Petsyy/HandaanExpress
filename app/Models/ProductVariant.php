@@ -14,6 +14,12 @@ class ProductVariant extends Model
         'is_default',
         'is_available',
     ];
+    protected $casts = [
+    'price' => 'decimal:2',
+    'stock' => 'integer',
+    'is_default' => 'boolean',
+    'is_available' => 'boolean',
+];
 
     public function product()
     {
