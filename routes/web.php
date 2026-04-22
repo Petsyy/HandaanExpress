@@ -15,7 +15,10 @@ Route::get('/product/{id}', function ($id) {
     return Inertia::render('customer/ProductDetailsPage', ['productId' => $id,]);
 })->name('product.show');
 
-//Cart
 Route::get('/cart', function () {
     return Inertia::render('customer/AddToCartPage');
 })->name('cart');
+
+Route::get('/order', function () {
+    return Inertia::render('customer/OrderPage');
+})->name('order');

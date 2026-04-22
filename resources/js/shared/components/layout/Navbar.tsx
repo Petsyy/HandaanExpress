@@ -27,7 +27,7 @@ export default function Navbar() {
                             <NavLink href="/menu">Menu</NavLink>
                         </li>
                         <li>
-                            <NavLink href="/orders">Orders</NavLink>
+                            <NavLink href="/order">Orders</NavLink>
                         </li>
                     </ul>
                 </nav>
