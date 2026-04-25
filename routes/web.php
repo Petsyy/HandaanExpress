@@ -1,15 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Customer\MenuController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('customer/LandingPage');
 });
 
-Route::get('/menu', function () {
-    return Inertia::render('customer/MenuPage');
-});
+Route::get('/menu', [MenuController::class, 'index'])->name('menu');
 
 Route::get('/product/{id}', function ($id) {
     return Inertia::render('customer/ProductDetailsPage', ['productId' => $id,]);

@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import { products, categories } from "@/data/products";
 import ProductCard from "@/features/product/components/ProductCard";
+import { Product } from "@/shared/types/models";
 
-export default function MenuContent() {
+type MenuContentProps = {
+    products?: Product[];
+};
+
+export default function MenuContent({ products = [] }: MenuContentProps) {
     const [category, setCategory] = useState("All");
     const [searchItem, setSearchItem] = useState("");
+
+    const categories = useMemo(() => {
+        const uniqueCategories = new Set(products.map((p) => p.category));
+        return ["All", ...Array.from(uniqueCategories)];
+    }, [products]);
 
     const filteredProducts = products.filter((product) => {
         const matchesCategory =
@@ -36,11 +45,10 @@ export default function MenuContent() {
                 {categories.map((cat) => (
                     <button key={cat} onClick={() => setCategory(cat)}>
                         <span
-                            className={`px-4 py-2 rounded-full cursor-pointer ${
-                                category === cat
+                            className={`px-4 py-2 rounded-full cursor-pointer ${category === cat
                                     ? "bg-orange-500 text-white"
                                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
+                                }`}
                         >
                             {cat}
                         </span>

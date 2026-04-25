@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Api\Controller;
-use App\Services\OrderService;
+use App\Services\Customer\OrderService;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -11,14 +12,14 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = $this->orderService->getUserOrders(auth()->id());
+        $orders = $this->orderService->getUserOrders(Auth::id());
 
         return response()->json($orders);
     }
 
     public function show(int $id)
     {
-        $order = $this->orderService->getUserOrderById(auth()->id(), $id);
+        $order = $this->orderService->getUserOrderById(Auth::id(), $id);
 
         return response()->json($order);
     }

@@ -39,13 +39,13 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
                 <div className="flex items-center gap-1 text-xs text-gray-600">
                     <Star className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
                     <span className="font-medium text-slate-900">
-                        {product.rating.toFixed(1)}
+                        {Number(product.rating ?? 0).toFixed(1)}
                     </span>
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
                     <span className="font-bold text-orange-600">
-                        PHP {product.price.toLocaleString()}
+                        PHP {Number(product.price).toLocaleString()}
                     </span>
 
                     {onAdd ? (

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Customer\CheckoutRequest;
 use App\Services\Customer\CheckoutService;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -13,7 +14,7 @@ class CheckoutController extends Controller
     public function store(CheckoutRequest $request)
     {   
         $order = $this->checkoutService->checkout(
-            auth()->id(),
+            Auth::id(),
             $request->validated()
         );
 
