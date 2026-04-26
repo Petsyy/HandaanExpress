@@ -1,32 +1,30 @@
 import { useMemo, useState } from "react";
 import { Check, Link, Minus, Plus, Star } from "lucide-react";
-import { products } from "@/data/products";
 import { usePage, router } from "@inertiajs/react";
 import { useCartStore } from "@/store/useCartStore";
+import { Product } from "@/shared/types/models";
 
-type PageProps = {
-    productId: string;
+type Props = {
+    product: Product;
 };
 
-export default function ProductDetails() {
-    const { productId } = usePage<PageProps>().props;
+export default function ProductDetails({ product }: Props) {
     const addItem = useCartStore((state) => state.addItem);
-
-    const product = products.find(
-        (item) => String(item.id) === String(productId),
-    );
 
     if (!product) {
         return <div className="px-6 py-10">Product not found.</div>;
     }
 
-    const defaultSize = product.sizes[0];
+    const defaultSize = product.sizes?.[0] ?? {
+        label: "Regular",
+        price: product.price,
+    };
 
     const [selectedSize, setSelectedSize] = useState(defaultSize.label);
     const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
     const [quantity, setQuantity] = useState(1);
 
-    const activeSize = product.sizes.find((size) => size.label === selectedSize) ?? defaultSize;
+    const activeSize = product.sizes?.find((size) => size.label === selectedSize) ?? defaultSize;
 
     const toggleAddOn = (label: string) => {
         setSelectedAddOns((current) =>
@@ -123,7 +121,7 @@ export default function ProductDetails() {
                         </h2>
 
                         <div className="mt-4 flex flex-wrap gap-3">
-                            {product.sizes.map((size) => {
+                            {product.sizes?.map((size) => {
                                 const isSelected = selectedSize === size.label;
 
                                 return (

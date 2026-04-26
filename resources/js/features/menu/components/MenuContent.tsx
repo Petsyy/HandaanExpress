@@ -41,20 +41,6 @@ export default function MenuContent({ products = [] }: MenuContentProps) {
                     className="w-full rounded-md border border-gray-300 pl-9 pr-4 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50"
                 />
             </div>
-            <div className="flex items-center gap-4">
-                {categories.map((cat) => (
-                    <button key={cat} onClick={() => setCategory(cat)}>
-                        <span
-                            className={`px-4 py-2 rounded-full cursor-pointer ${category === cat
-                                    ? "bg-orange-500 text-white"
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                                }`}
-                        >
-                            {cat}
-                        </span>
-                    </button>
-                ))}
-            </div>
 
             {filteredProducts.length > 0 ? (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
