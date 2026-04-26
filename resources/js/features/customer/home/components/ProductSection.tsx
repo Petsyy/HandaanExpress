@@ -1,6 +1,5 @@
 import type { Product } from "@/shared/types/models";
-import { products } from "@/data/products";
-import ProductCard from "@/features/product/components/ProductCard";
+import ProductCard from "@/features/customer/product/components/ProductCard";
 
 type ProductSectionProps = {
     items?: Product[];
@@ -17,12 +16,8 @@ export default function ProductSection({
     limit = 4,
     onAddProduct,
 }: ProductSectionProps) {
-    const sourceProducts = items ?? products;
-    const popularProducts = sourceProducts.filter((product) => product.popular);
-    const displayedProducts =
-        popularProducts.length > 0
-            ? popularProducts.slice(0, limit)
-            : sourceProducts.slice(0, limit);
+    const sourceProducts = items ?? [];
+    const displayedProducts = sourceProducts.slice(0, limit);
 
     return (
         <section className="container mx-auto space-y-8 px-6 py-16 sm:px-10 md:px-14 lg:px-24">

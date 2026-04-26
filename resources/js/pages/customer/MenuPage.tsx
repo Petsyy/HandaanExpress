@@ -1,6 +1,6 @@
 import { Head, usePage } from "@inertiajs/react";
-import Layout from "@/shared/components/layout/CustomerLayout";
-import { MenuContent } from "@/features/menu";
+import Layout from "@/layouts/customer/CustomerLayout";
+import { MenuContent } from "@/features/customer/menu";
 import type { Product } from "@/shared/types/models";
 
 type MenuPageProps = {

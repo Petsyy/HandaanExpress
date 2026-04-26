@@ -1,5 +1,5 @@
-import Cart from "@/features/cart/Cart"
-import CustomerLayout from "@/shared/components/layout/CustomerLayout"
+import Cart from "@/features/customer/cart/Cart"
+import CustomerLayout from "@/layouts/customer/CustomerLayout"
 
 
 export default function AddToCartPage() {

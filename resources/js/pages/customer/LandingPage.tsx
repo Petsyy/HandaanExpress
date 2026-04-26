@@ -1,6 +1,6 @@
 import { Head } from "@inertiajs/react";
-import Layout from "@/shared/components/layout/CustomerLayout";
-import { HeroSection, ProductSection, HowItWorksSection } from "@/features/home";
+import Layout from "@/layouts/customer/CustomerLayout";
+import { HeroSection, ProductSection, HowItWorksSection } from "@/features/customer/home";
 
 export default function LandingPage() {
     return (

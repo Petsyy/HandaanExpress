@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
-import ProductCard from "@/features/product/components/ProductCard";
+import ProductCard from "@/features/customer/product/components/ProductCard";
 import { Product } from "@/shared/types/models";
 
 type MenuContentProps = {

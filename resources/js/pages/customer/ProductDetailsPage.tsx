@@ -1,6 +1,6 @@
 import { Head } from "@inertiajs/react";
-import Layout from "@/shared/components/layout/CustomerLayout";
-import { ProductDetails } from "@/features/product";
+import Layout from "@/layouts/customer/CustomerLayout";
+import { ProductDetails } from "@/features/customer/product";
 import type { Product } from "@/shared/types/models";
 import { usePage } from "@inertiajs/react";
 

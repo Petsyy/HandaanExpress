@@ -12,7 +12,6 @@ export default function Cart() {
     const total = subtotal + deliveryFee;
 
     return (
-        // Changed max-w-7xl to max-w-3xl for a better focused look
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <h1 className="text-4xl font-bold text-gray-800 mb-8">Cart</h1>
 
@@ -47,7 +46,7 @@ export default function Cart() {
 
                                     <div className="flex items-center justify-between mt-4">
                                         <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-xl">
-                                            {/* Made buttons more visible with bg-slate-100 */}
+
                                             <Button 
                                                 variant="ghost" 
                                                 size="icon"
@@ -67,7 +66,6 @@ export default function Cart() {
                                             </Button>
                                         </div>
                                         
-                                        {/* Added background to delete button */}
                                         <Button 
                                             variant="ghost" 
                                             size="icon"
